@@ -1,0 +1,40 @@
+CODE FOR AR PART TO LINK API TOKEN WITH IOT
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+public class ClickUrl : MonoBehaviour
+{
+public string url;
+public void open()
+{
+StartCoroutine(GetRequest(url));
+}
+IEnumerator GetRequest(string uri)
+{
+using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+{
+yield return webRequest.SendWebRequest();
+}}
+}
+
+
+CODE FOR ARDUINO TO WIFI CONTROLLER:
+//Include the library files
+#define BLYNK_PRINT Serial
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+#define BLYNK_AUTH_TOKEN "Enter your blynk auth token" 
+char auth[] = BLYNK_AUTH_TOKEN;
+char ssid[] = "Enter your WIFI name";
+char pass[] = "abiabishek2002";//Enter your WIFI password
+//Get the button value
+BLYNK_WRITE(V0) {
+  digitalWrite(D1, param.asInt());
+}
+void setup() {
+  pinMode(D1, OUTPUT);
+  Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
+}
+void loop() {  Blynk.run();
+}
